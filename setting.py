@@ -17,7 +17,6 @@ proxies = {
 
 url = 'https://www.san499.com/meinv'
 
-
 comics_url = 'https://www.san499.com/'
 
 loc_path_c = r'C:\Users\23909\Desktop\xx3040\xx3040'

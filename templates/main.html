@@ -44,12 +44,13 @@
         <div class="col-md-12 text-center">
             <table class="table table-bordered table-hover">
                 {% for i in comics_list %}
-                    <tr>
-                        <td>{{ i.uid }}</td>
-                        <td>{{ i.tittle }}</td>
-                        <td><a href="{{i.look_url}}" type="button">LOOK</a></td>
-                        <td><a href="{{i.down_url}}" type="button">DOWN</a></td>
-                    </tr>
+                <tr>
+                    <td>{{ i.uid }}</td>
+                    <td>{{ i.tittle }}</td>
+                    <td>{{ i.len }}</td>
+                    <td><a href="{{i.look_url}}" type="button">LOOK</a></td>
+                    <td><a href="/update_rss/{{i.uid}}" type="button">UPDATE</a></td>
+                </tr>
                 {% endfor %}
             </table>
         </div>
