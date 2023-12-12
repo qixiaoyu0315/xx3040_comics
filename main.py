@@ -8,7 +8,7 @@ from starlette.templating import Jinja2Templates
 from fastapi.openapi.docs import get_swagger_ui_html
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from util_x3040_new import add_comics_rss, view_all_comics, get_page_img_list_to_dict, down_comics_img_for_page, \
+from util_x3040 import add_comics_rss, view_all_comics, get_page_img_list_to_dict, down_comics_img_for_page, \
     look_comics, check_pig_ex, update_all_comics, update_comics_one
 
 
