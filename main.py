@@ -8,6 +8,7 @@ from starlette.templating import Jinja2Templates
 from fastapi.openapi.docs import get_swagger_ui_html
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+from util_video import get_video_info, get_photo_analysis, get_down_video
 from util_x3040 import add_comics_rss, view_all_comics, get_page_img_list_to_dict, down_comics_img_for_page, \
     look_comics, check_pig_ex, update_all_comics, update_comics_one
 
@@ -53,7 +54,7 @@ async def shutdown_event():
 @app.get("/")
 def comics_root(request: Request):
     comics_list = view_all_comics()
-    return template.TemplateResponse('main.html', {'request': request, 'comics_list': comics_list, })
+    return template.TemplateResponse('index.html', {'request': request, 'comics_list': comics_list, 'home_active':'active'})
 
 
 # 添加订阅功能
@@ -65,8 +66,8 @@ def comics_add_rss(request: Request, uid_url: str, ):
     else:
         msg_text = '订阅失败'
     comics_list = view_all_comics()
-    return template.TemplateResponse('main.html',
-                                     {'request': request, 'comics_list': comics_list, 'msg_text': msg_text})
+    return template.TemplateResponse('index.html',
+                                     {'request': request, 'comics_list': comics_list, 'msg_text': msg_text, 'home_active':'active'})
 
 
 # 内容页面跳转
@@ -79,8 +80,8 @@ def comics_to_page(request: Request, uid: str, page: str):
     print([flag])
     if flag:
         comics_list = view_all_comics()
-        return template.TemplateResponse('main.html', {'request': request, 'comics_list': comics_list,
-                                                       'msg_text': '下载图片中，刷新即可'})
+        return template.TemplateResponse('index.html', {'request': request, 'comics_list': comics_list,
+                                                       'msg_text': '下载图片中，刷新即可', 'home_active':'active'})
 
     page_img_list = look_comics(uid, page)
 
@@ -91,7 +92,7 @@ def comics_to_page(request: Request, uid: str, page: str):
     down_comics_img_for_page(uid, str(int(page) + 1))
 
     if page_img_list:
-        return template.TemplateResponse('comics_page.html', {'request': request, 'page_img_list': page_img_list})
+        return template.TemplateResponse('comics_page.html', {'request': request, 'page_img_list': page_img_list, 'home_active':'active'})
     else:
         return '404'
 
@@ -101,8 +102,8 @@ def comics_to_page(request: Request, uid: str, page: str):
 def comics_update_rss_all(request: Request, uid: str):
     update_comics_one(uid)
     comics_list = view_all_comics()
-    return template.TemplateResponse('main.html',
-                                     {'request': request, 'comics_list': comics_list, 'msg_text': '全部更新成功'})
+    return template.TemplateResponse('index.html',
+                                     {'request': request, 'comics_list': comics_list, 'msg_text': '全部更新成功', 'home_active':'active'})
 
 
 # 更新全部订阅功能
@@ -110,8 +111,30 @@ def comics_update_rss_all(request: Request, uid: str):
 def comics_update_rss_all(request: Request):
     update_all_comics()
     comics_list = view_all_comics()
-    return template.TemplateResponse('main.html',
-                                     {'request': request, 'comics_list': comics_list, 'msg_text': '全部更新成功'})
+    return template.TemplateResponse('index.html',
+                                     {'request': request, 'comics_list': comics_list, 'msg_text': '全部更新成功', 'home_active':'active'})
+
+
+# 解析网页
+@app.get("/get_video_info_api")
+def get_video_info_api(request: Request, start: str, end: str):
+    get_video_info(int(start.strip()),int(end.strip()))
+    return template.TemplateResponse('index.html',
+                                     {'request': request, 'msg_text': '解析完成', 'ios_active':'active'})
+
+# 解析图片
+@app.get("/get_photo_analysis_api")
+def get_photo_analysis_api(request: Request):
+    get_photo_analysis()
+    return template.TemplateResponse('index.html',
+                                     {'request': request, 'msg_text': '解析完成', 'ios_active':'active'})
+
+# 解析图片
+@app.get("/down_video_api")
+def get_photo_analysis_api(request: Request, video_num):
+    get_down_video(video_num)
+    return template.TemplateResponse('index.html',
+                                     {'request': request, 'msg_text': '下载完成', 'ios_active':'active'})
 
 
 if __name__ == "__main__":
