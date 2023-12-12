@@ -59,12 +59,13 @@ def get_video_info(start,end):
 # 获取页面中的信息 存入数据库
 def get_video_info_add_db(page_url):
     img_lists = []
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--disable-gpu')
-    chrome_options.add_argument(
-        "--user-agent=Mozilla/5.0 (Linux; Android 11; Redmi K30 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.116 Mobile Safari/537.36 EdgA/45.09.4.5079")
-    driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
+    # chrome_options = Options()
+    # chrome_options.add_argument('--headless')
+    # chrome_options.add_argument('--disable-gpu')
+    # chrome_options.add_argument(
+    #     "--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1")
+    # driver = webdriver.Chrome(executable_path=driver_path, options=chrome_options)
+    driver = webdriver.Chrome(executable_path=driver_path)
 
     driver.get(page_url)
     html = driver.page_source

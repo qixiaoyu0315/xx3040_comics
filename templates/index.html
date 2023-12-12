@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../../static/css/test.css" rel="stylesheet">
+    <link href="../../static/css/bootoast.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>各种工具</title>
+    <link rel="icon" href="../../static/head.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../../static/head.png" type="image/x-icon">
+</head>
+<body>
+<div class="container">
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="{{ home_active }}"><a data-toggle="tab" href="#home">MH</a></li>
+        <li class="{{ ios_active }}"><a data-toggle="tab" href="#ios">VD</a></li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade in {{ home_active }}" id="home">
+            <div class="row">
+                <div class="col-md-3">
+                    <form action='/add_rss/' method='get'>
+                        <div class="row">
+                            <legend>添加订阅</legend>
+                            <div class="col-md-8">
+                                <input class="form-control" id="uid_url" name="uid_url" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn success" type="submit">添加</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-1">
+                    <form action='/update_rss_all/' method='get'>
+                        <div class="row">
+                            <legend>全部更新</legend>
+                            <div class="col-md-8">
+                                <button class="btn success_info" type="submit">更新</button>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <table class="table table-bordered table-hover">
+                        {% for i in comics_list %}
+                        <tr>
+                            <td>{{ i.uid }}</td>
+                            <td>{{ i.tittle }}</td>
+                            <td>{{ i.len }}</td>
+                            <td><a href="{{i.look_url}}" type="button">LOOK</a></td>
+                            <td><a href="/update_rss/{{i.uid}}" type="button">UPDATE</a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade in {{ ios_active }}" id="ios">
+            <div class="row">
+                <div class="col-md-7">
+                    <form action='/get_video_info_api' method='get'>
+                        <div class="row">
+                            <legend>解析页数</legend>
+                            <div class="col-md-5">
+                                START:
+                                <input class="form-control" name="start" type="text">
+                            </div>
+                            <div class="col-md-5">
+                                END:
+                                <input class="form-control" name="end" type="text">
+                            </div>
+                            <div class="col-md-2">
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <button class="btn success_info" type="submit">解析</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-1">
+                    <form action='/get_photo_analysis_api' method='get'>
+                        <div class="row">
+                            <legend>解析图片</legend>
+
+                            <div class="col-md-4">
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <button class="btn success_info" type="submit">解析</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form action='/down_video_api' method='get'>
+                        <div class="row">
+                            <legend>下载视频</legend>
+                            <div class="col-md-8">
+                                下载数量:
+                                <input class="form-control" name="video_num" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                <button class="btn success_info" type="submit">下载</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p class="text-primary bg-success" style="font-size:30px" id="msg_text">{{ msg_text }}</p>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
